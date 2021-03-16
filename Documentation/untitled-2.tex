@@ -1,0 +1,170 @@
+\documentclass{article}
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+
+\title{A template for the \emph{arxiv} style}
+
+\author{
+  Shriram Varadarajan \\
+  Department of Elecrical Computer engineering\\
+  University of Iowa\\
+  Iowa city, IA, 52242 \\
+  \texttt{shriram-varadarajan@uiowa.edu} \\
+  %% examples of more authors
+   \And
+ Jacob Nishimura \\
+  Department of Elecrical Computer engineering\\
+  University of Iowa\\
+  Iowa city, IA, 52242 \\
+  \texttt{jacob-nishimura@uiowa.edu} \\
+\And
+Joseph Kim \\
+  Department of Biomedical Engineering\\
+  University of Iowa\\
+  Iowa city, IA, 52242 \\
+  \texttt{joseph-kim@uiowa.edu} \\
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is our research paper 
+\end{abstract}
+
+
+% keywords can be removed
+\keywords{First keyword \and Second keyword \and More}
+
+
+\section{Introduction}
+\begin{itemize}
+\item Overview of the problem and the relevant background knowledge must be described in a section titled "Introduction". 
+\item The introduction section should be around 1-1.5 pages, and certainly no longer than 2 pages using the submission template above.
+\item Your audience should be fellow graduate students/faculty in a different discipline. Hence, you must educate them with an easy-to-understand language, so that the readers are ready to digest the remainder of your project description. You can assume the audience has a basic background knowledge on the topics such as AI/ML/DL. 
+\item Related works should be referenced, so that the readers can have some historical context ("what other people did/do"). However, the introduction section should not be too technical or jargony.
+\end{itemize}
+
+
+\section{Problem Definition}
+\label{sec:pb}
+If the intro section was a place for mostly lay-person's description of your project, "Problem Definition" section is where you can use technical terms to define your problem more precisely.\\
+Be very precise and explicit about input-output parameters to your machine learning problem. For example, "I will make a machine learning model that predicts house price"  is not a good problem statement. Instead, be more specific about what goes into your model and what will come out of your model. For example, "The model will take a color photograph (RGB image) of a house resized to 224-by-224 alongside other metadata including 'build year,' 'days on market,' 'square footage,' and 'school district,' and predict the dollar amount (normalized in range [0,1]) of the actual market price of the house as an output" is a better way to state your problem. If you have too many parameters to be listed in one sentence, creating a table listing inputs and outputs, as well as their data types (e.g. color image, grayscale image, time-series, scalar, string, ...) would be a great idea.
+The problem definition section should be around 0.5 - 1 page, but certainly no more than that.\\
+
+See Section \ref{sec:pb}.
+
+\subsection{Headings: second level}
+
+
+\subsubsection{Headings: third level}
+
+
+\paragraph{Paragraph}
+
+
+\section{Data}
+\label{sec:Data}
+
+\begin{itemize}
+\item What is available/not available in the data set (in conjunction with your input-output description in Problem Definition)
+\item How do they look like? (insert figures showing some data samples)
+\item How are they collected? What device/modality/sensor/etc. was used?
+\item How are they formatted? What do you need to do to parse them? Is there a parser available, or do you need to build your own?
+\item (If human subject data) A statement indicating the IRB status and compliance with other human subject research protocols.
+\end{itemize}
+
+\subsection{Figures}
+Figures \\
+See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
+
+
+\begin{figure}
+  \centering
+  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{Sample figure caption.}
+  \label{fig:fig1}
+\end{figure}
+
+\subsection{Tables}
+
+See awesome Table~\ref{tab:table}.
+
+\begin{table}
+ \caption{Sample table title}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{c}{Part}                   \\
+    \cmidrule(r){1-2}
+    Name     & Description     & Size ($\mu$m) \\
+    \midrule
+    Dendrite & Input terminal  & $\sim$100     \\
+    Axon     & Output terminal & $\sim$10      \\
+    Soma     & Cell body       & up to $10^6$  \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table}
+\end{table}
+
+
+
+
+\bibliographystyle{unsrt}  
+%\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
+%%% and comment out the ``thebibliography'' section.
+
+
+%%% Comment out this section when you \bibliography{references} is enabled.
+\begin{thebibliography}{1}
+
+\bibitem{kour2014real}
+George Kour and Raid Saabne.
+\newblock Real-time segmentation of on-line handwritten arabic script.
+\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
+  International Conference on}, pages 417--422. IEEE, 2014.
+
+\bibitem{kour2014fast}
+George Kour and Raid Saabne.
+\newblock Fast classification of handwritten on-line arabic characters.
+\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
+  International Conference of}, pages 312--318. IEEE, 2014.
+
+\bibitem{hadash2018estimate}
+Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
+  Jacovi.
+\newblock Estimate and replace: A novel approach to integrating deep neural
+  networks with existing applications.
+\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
+
+\end{thebibliography}
+
+
+\end{document}
