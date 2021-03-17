@@ -93,11 +93,16 @@ See Section \ref{sec:pb}.
 \section{Data}
 \label{sec:Data}
 
+
 \begin{itemize}
-\item What is available/not available in the data set (in conjunction with your input-output description in Problem Definition)
-\item How do they look like? (insert figures showing some data samples)
+\item What is available/not available in the data set (in conjunction with your input-output description in Problem Definition) \\
+Data that are available in the dataset are the movie ratings and users with the movie tags. The data that is not available are the users' text reviews for further
+word processing and text similarity. The movies have associated genres and titles which can be used for text preprocessing.
+\item How do they look like? (insert figures showing some data samples) - See Table~\ref{tab:table1} and~\ref{tab:table2}
 \item How are they collected? What device/modality/sensor/etc. was used?
+The movies were collected from the website \url{https://www.themoviedb.org/}. These data were created by 162541 users between January 09, 1995 and November 21, 2019. This dataset was generated on November 21, 2019.
 \item How are they formatted? What do you need to do to parse them? Is there a parser available, or do you need to build your own?
+They are formatted in the generic csv style format. A csv parser in python would do the trick in extracting the data from the tables. 
 \item (If human subject data) A statement indicating the IRB status and compliance with other human subject research protocols.
 \end{itemize}
 
@@ -115,23 +120,36 @@ See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of th
 
 \subsection{Tables}
 
-See awesome Table~\ref{tab:table}.
+See Table~\ref{tab:table1}.
 
 \begin{table}
- \caption{Sample table title}
+ \caption{Ratings}
   \centering
-  \begin{tabular}{lll}
+  \begin{tabular}{llll}
     \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
+    userId     & movieId     & Rating & Timestamp \\
     \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
+    4 & 5  & 4  & 23:12   \\
+    3     & 1 & 5     & 22:22 \\
+    1     & 3       & 3  & 11:11\\
     \bottomrule
   \end{tabular}
-  \label{tab:table}
+  \label{tab:table1}
+\end{table}
+
+\begin{table}
+ \caption{Tags}
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    userId     & movieId     & Tag & Timestamp \\
+    \midrule
+    4 & 5  & extag  & 23:12   \\
+    3     & 1 & tag     & 22:22 \\
+    1     & 3       & tag  & 11:11\\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table2}
 \end{table}
 
 
