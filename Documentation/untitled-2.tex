@@ -19,21 +19,21 @@
   Shriram Varadarajan \\
   Department of Elecrical Computer engineering\\
   University of Iowa\\
-  Iowa city, IA, 52242 \\
+  Iowa City, IA, 52242 \\
   \texttt{shriram-varadarajan@uiowa.edu} \\
   %% examples of more authors
    \And
  Jacob Nishimura \\
   Department of Elecrical Computer engineering\\
   University of Iowa\\
-  Iowa city, IA, 52242 \\
+  Iowa City, IA, 52242 \\
   \texttt{jacob-nishimura@uiowa.edu} \\
 \And
 Joseph Kim \\
   Department of Biomedical Engineering\\
   University of Iowa\\
-  Iowa city, IA, 52242 \\
-  \texttt{joseph-kim@uiowa.edu} \\
+  Iowa City, IA, 52242 \\
+  \texttt{joseph-kim-3@uiowa.edu} \\
   %% \AND
   %% Coauthor \\
   %% Affiliation \\
@@ -107,9 +107,9 @@ Data that are available in the dataset are the movie ratings and users with the 
 word processing and text similarity. The movies have associated genres and titles which can be used for text preprocessing.
 \item How do they look like? (insert figures showing some data samples) - See Table~\ref{tab:table1} and~\ref{tab:table2}
 \item How are they collected? What device/modality/sensor/etc. was used?
-The movies were collected from the website \url{https://www.themoviedb.org/}. These data were created by 162541 users between January 09, 1995 and November 21, 2019. This dataset was generated on November 21, 2019.
+The movies were collected from the website \url{https://www.themoviedb.org/}. This database hosts information on millions of movies, TV shows, and actors. The site was originally conceived as a donation from the Online Media Database, which is an online collaborative database intended to share content published under a Creative Commons license. The data was created by 162,541 users between January 09, 1995 and November 21, 2019. This dataset was generated on November 21, 2019.
 \item How are they formatted? What do you need to do to parse them? Is there a parser available, or do you need to build your own?
-They are formatted in the generic csv style format. A csv parser in python would do the trick in extracting the data from the tables. 
+The MovieLens dataset is formatted in the generic csv style format with two primary sizes, small and full. A csv parser in python would do the trick in extracting the data from the tables. The small dataset is formatted with 100,836 ratings, 3683 tags, 9,742 movies, and 610 users collected between March 1996 and September 2018. Initial training and tuning will be performed using the small dataset before translation to the full dataset, which will require much more computational power and time due to its larger size. 
 \item (If human subject data) A statement indicating the IRB status and compliance with other human subject research protocols.
 \end{itemize}
 
