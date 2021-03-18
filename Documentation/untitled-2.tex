@@ -13,7 +13,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{lipsum}
 
-\title{A template for the \emph{arxiv} style}
+\title{Movie recommendation system}
 
 \author{
   Shriram Varadarajan \\
@@ -56,7 +56,7 @@ Joseph Kim \\
 \maketitle
 
 \begin{abstract}
-This is our research paper 
+This is our paper for the course ISE:6380 Deep learning course taught by Prof. Stephen Baek, University of Iowa. This will be modified and updated through the course of the semester. 
 \end{abstract}
 
 
@@ -68,8 +68,15 @@ This is our research paper
 \begin{itemize}
 \item Overview of the problem and the relevant background knowledge must be described in a section titled "Introduction". 
 \item The introduction section should be around 1-1.5 pages, and certainly no longer than 2 pages using the submission template above.
+In today's day and age, recommender systems have become an integral part of the ML/AI framework, often cited as examples for AI and ML learning. They are adopted in many applications including movies, foods, marketing, stocks etc. The key to building a good recommender system is to model the users' previous
+interaction with the items. Collaborative filtering is one way of getting the interactions between users and the items that they are associated with. There are also libraries associated with the Python programming language such as PySpark, Tensorflow among many others. 
+This paper focuses on building a deep learning neural network using the Python programming language to recommend movies to users. 
+Users using a website that recommends movies might need a model that predicts which users are similar such that their watched movies can be matched with the current user. 
+These deep neural networks have been able to prove their usefulness in several domains including computer vision, automation of various tasks, games and text and speech processing.
 \item Your audience should be fellow graduate students/faculty in a different discipline. Hence, you must educate them with an easy-to-understand language, so that the readers are ready to digest the remainder of your project description. You can assume the audience has a basic background knowledge on the topics such as AI/ML/DL. 
-\item Related works should be referenced, so that the readers can have some historical context ("what other people did/do"). However, the introduction section should not be too technical or jargony.
+\item Related works should be referenced, so that the readers can have some historical context ("what other people did/do"). However, the introduction section should not be too technical or jargony.\\
+Neural collaborative filtering - \url{https://arxiv.org/pdf/1708.05031.pdf}. \\
+
 \end{itemize}
 
 
@@ -160,29 +167,29 @@ See Table~\ref{tab:table1}.
 %%% and comment out the ``thebibliography'' section.
 
 
-%%% Comment out this section when you \bibliography{references} is enabled.
-\begin{thebibliography}{1}
-
-\bibitem{kour2014real}
-George Kour and Raid Saabne.
-\newblock Real-time segmentation of on-line handwritten arabic script.
-\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
-  International Conference on}, pages 417--422. IEEE, 2014.
-
-\bibitem{kour2014fast}
-George Kour and Raid Saabne.
-\newblock Fast classification of handwritten on-line arabic characters.
-\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
-  International Conference of}, pages 312--318. IEEE, 2014.
-
-\bibitem{hadash2018estimate}
-Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
-  Jacovi.
-\newblock Estimate and replace: A novel approach to integrating deep neural
-  networks with existing applications.
-\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
-
-\end{thebibliography}
+%%%% Comment out this section when you \bibliography{references} is enabled.
+%\begin{thebibliography}{1}
+%
+%\bibitem{kour2014real}
+%George Kour and Raid Saabne.
+%\newblock Real-time segmentation of on-line handwritten arabic script.
+%\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
+%  International Conference on}, pages 417--422. IEEE, 2014.
+%
+%\bibitem{kour2014fast}
+%George Kour and Raid Saabne.
+%\newblock Fast classification of handwritten on-line arabic characters.
+%\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
+%  International Conference of}, pages 312--318. IEEE, 2014.
+%
+%\bibitem{hadash2018estimate}
+%Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
+%  Jacovi.
+%\newblock Estimate and replace: A novel approach to integrating deep neural
+%  networks with existing applications.
+%\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
+%
+%\end{thebibliography}
 
 
 \end{document}
