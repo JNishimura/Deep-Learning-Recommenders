@@ -4,5 +4,5 @@ The demo notebook is located in /Notebooks/demo.ipynb. Running the demo requires
 * Pandas
 * Numpy
 * Tensorflow
-* 
+
 The proposal.pdf file is in the root directory of this repository.
