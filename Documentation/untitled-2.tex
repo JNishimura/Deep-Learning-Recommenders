@@ -8,11 +8,15 @@
 \usepackage{hyperref} % hyperlinks
 \usepackage{url} % simple URL typesetting
 \usepackage{booktabs} % professional-quality tables
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
 \usepackage{amsfonts} % blackboard math symbols
 \usepackage{nicefrac} % compact symbols for 1/2, etc.
 \usepackage{microtype} % microtypography
 \usepackage{lipsum}
-
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 \title{Extending Neural Collaborative Filtering}
 
 \author{
@@ -153,8 +157,84 @@ userId & movieId & Tag & Timestamp \\
 \label{tab:table2}
 \end{table}
 
+\begin{table}[h]
+\caption{MovieLens}
+\centering
+\begin{tabular}{llll}
+\toprule
+Users & Movies & Ratings \\
+\midrule
+6040 & 3076 & 1000203 \\
+\bottomrule
+\end{tabular}
+\label{tab:table1}
+\end{table}
 
+\section{Experiments and Results}
+\subsection{Evaluation charts and results}
+\subsubsection{Hit Rate and NCDG @ K=10}
+In this section, we tabulate and present the results of training our various models on the MovieLens dataset. \\
+HitRate@10 and NCDG@10 (Normalized cumulative distributed gain) for the models are presented below. These evaluations were calculated using the top-N recommendations that were predicted by the models. The models are tested over 11 epochs with the 0th epoch being the initial testing of the model.\\
+\includegraphics[scale=0.5]{hit_rate}
+\includegraphics[scale=0.5]{ncdg}\\
 
+\subsubsection{Loss}
+Loss for the models is presented in the chart below. Loss was calculated as the binary cross-entropy from the keras library. The accuracy and the loss metrics for all the models was calculated using binary crossentropy since the ratings were implicit, using binary values of 0 and 1. \\
+\begin{center}
+\includegraphics[scale=0.5]{loss}
+\end{center}
+
+\subsubsection{GMF on the 100k dataset}
+ The models were first trained on the 100k Movielens dataset but the errors and the evaluation metrics were far too off to predict any recommendations for the users. Specifically, the 100k dataset with 100,000 ratings was trained on the GMF model and the results of the evaluations and the loss is depicted in the chart below.
+The model was tested on the Hit rate, NCDG and binary loss over 11 epochs with the 0th epoch being the initial testing of the model. \\
+\begin{center}
+\includegraphics[scale=0.5]{gmf100k}
+\end{center}
+
+\subsubsection{Embedding dimensions on model performance}
+We tested the models' loss and metrics against embedding vector dimensions of sizes 4, 8, 16 and 32 since they are common powers of 2. As can be observed from the figure, GMF and NeuMF models performed really well on 16 dimensions os the inputs whereas the MLP model did well on the dimension of 4. this could be due to the fact that the MLP model has a lot of parameters than the GMF model and thus might result in overfitting the training dataset. As far as NeuMF is concerned, even though the number of parameters were more or less the same, as will be descirbed in the Combined NeuMF section, the $\alpha$ parameter reduces its effect on the overall output.
+\begin{center}
+\includegraphics[scale=0.5]{factors}
+\end{center}
+
+\subsection{Multi-layer Preceptron}
+The multi-layer preceptron model used a 64 $\rightarrow$ 32 $\rightarrow$ 16 $\rightarrow$ 1 dense layer units with a RelU activation for the first 3 layers and the sigmoid activation for the last Dense 1 unit layer. The first layer is initialized using a glorot uniform initializer and uses an L2 regularizer. The other layers use a normal configuration. This model was previously tested with an average ayer configuration such as 512 $\rightarrow$ 256 $\rightarrow$ 64 $\rightarrow$ 32 and 32 $\rightarrow$ Avg layer $\rightarrow$ 1 that used more dense units and layers with an addition of an average layer that smooths the result of the 32 units dense layers. But the model had a problem of overfitting the dataset. The metrics of the tested models are presented in the table below.
+
+\begin{table}[h]
+\caption{Accuracies, HR@10 and NCDG@10}
+\centering
+\begin{tabular}{llll}
+\toprule
+Model & Accuracy & HR10 & NCDG10 \\
+\midrule
+Original Model & 0.863 & 0.5629 & 0.3145 \\
+Average model & 0.814 & 0.4412 & 0.2216 \\
+\bottomrule
+\end{tabular}
+\label{tab:table6}
+\end{table}
+
+\subsection{Generalized Matrix Factorization}
+GMF model used the matrix factorization method of the dot product bwtween the user latent vector and the item latent vector.
+
+\subsection{Combined NeuMF}
+The NeuMF model combined the matrix factorization and the multi-layer preceptron. The GMF model is the same as the original wheras the MLP part had some tweaking to it. Instead of the original layers that were mentioned in Table 4, the model uses 64 $\rightarrow$ 32 $\rightarrow$ 8 $\rightarrow$ 1, with L2 regularization on all the layers. After the individual part outputs, the model use a custom layer that combines the output of the GMF and the MLP models together using $\alpha$ as a weighting parameter to balance the effects of the two model outputs.\\
+
+\[
+\begin{bmatrix}
+    \alpha * (\phi_{GMF}) \\
+    (1 - \alpha) * (\phi_{MLP})  
+\end{bmatrix}
+\]
+
+The final result is an addition operation performed on the elements of the matrix and this gives the prediction $y_{ui}$ of user \emph{u} and item \emph{i}.
+
+\subsection{Outerproduct Model - FILL IN HERE}
+
+\section{Comparison of Models}
+From the last section, all of the models strongly perform well on the datasets. We can see that GMF and NeuMF dominate MLP in terms of accuracy and evaluation metrics. Specifically, when comparing the best performances of these models across their embedding dimension factors, GMF and NeuMF show consistent improvements over MLP in terms of HR@10 and NCDG@10. GMF, in particular seems to be performing a little better than NeuMF by margins of $\pm 0.02$. MLP is lower than NeuMF by about $0.1 \pm 0.02$. MLP can be improved by adding more dense layers or adding regularizers, here we test with only 3 hidden layers.\\
+
+We also see that the GMF model performs poorly on the 100k dataset in terms of the evaluation metrics even though the binary loss goes down for every epoch. The highest HR@10 achieved was $0.4$ on this dataset and NCDG@10 was around $0.25$. Comparing this to the models trained on the 1m dataset shows the difference. This might be due to the arrangement or the input type feed to the neural net. of the 100k dataset of MovieLens compared to the 1M dataset where the former consisted of tensor slices whereas the 1m dataset used numpy arrays which proved to be much faster to train the models.\\
 
 \bibliographystyle{unsrt}
 %\bibliography{references} %%% Remove comment to use the external .bib file (using bibtex).
