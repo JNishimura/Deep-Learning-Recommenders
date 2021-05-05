@@ -242,7 +242,7 @@ We also see that the GMF model performs poorly on the 100k dataset in terms of t
 
 The Outer Product model was similarly evaluated, primarily using HR and NCDG. Increasing embedding vector dimension size from 8 up to 32 allowed for greater HR and NCDG along with incremental decreases in loss. Notably, a learning rate of 0.001 using the Adam optimizer yielded the best performance compared to higher values. In direct comparison between LR = 0.001 and LR = 0.005, the lower value demonstrated greater decrease in loss, perhaps indicating unnecessarily quick convergence in the higher LR model leading to a suboptimal outcome.\\
 
-The Outer Product model was expanded to incorporate ResNet. Increased architectural complexity yielded similar results to the original model, with a comparison of $0.64$ HR and $0.37$ NCDG for the original versus $___$ HR and $___$ NCDG for the ResNet model after 20 epochs of training.\\
+The Outer Product model was expanded to incorporate ResNet. Increased architectural complexity yielded similar results to the original model, with a comparison of $0.64$ HR and $0.37$ NCDG for the original versus \rule{1cm}{0.15mm} HR and \rule{1cm}{0.15mm} NCDG for the ResNet model after 20 epochs of training.\\
 
 \bibliographystyle{unsrt}
 %\bibliography{references} %%% Remove comment to use the external .bib file (using bibtex).
