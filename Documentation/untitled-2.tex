@@ -229,12 +229,20 @@ The NeuMF model combined the matrix factorization and the multi-layer preceptron
 
 The final result is an addition operation performed on the elements of the matrix and this gives the prediction $y_{ui}$ of user \emph{u} and item \emph{i}.
 
-\subsection{Outerproduct Model - FILL IN HERE}
+\subsection{Outer Product Model}
+The Outer Product model NCF model took in user and item embeddings similarly to the other MF models. However, the Outer Product model additionally computed the outer product between the two to create a 2-dimensional interaction map. This was followed by a convolution layer with ReLU activation, pooling, another convolution layer with ReLU activation, and a final Dense layer with sigmoid activation. This was additionally tested with varying embedding vector dimensions of sizes 8, 16, and 32.
+
+\subsection{Outer Product Model - ResNet}
+
 
 \section{Comparison of Models}
 From the last section, all of the models strongly perform well on the datasets. We can see that GMF and NeuMF dominate MLP in terms of accuracy and evaluation metrics. Specifically, when comparing the best performances of these models across their embedding dimension factors, GMF and NeuMF show consistent improvements over MLP in terms of HR@10 and NCDG@10. GMF, in particular seems to be performing a little better than NeuMF by margins of $\pm 0.02$. MLP is lower than NeuMF by about $0.1 \pm 0.02$. MLP can be improved by adding more dense layers or adding regularizers, here we test with only 3 hidden layers.\\
 
 We also see that the GMF model performs poorly on the 100k dataset in terms of the evaluation metrics even though the binary loss goes down for every epoch. The highest HR@10 achieved was $0.4$ on this dataset and NCDG@10 was around $0.25$. Comparing this to the models trained on the 1m dataset shows the difference. This might be due to the arrangement or the input type feed to the neural net. of the 100k dataset of MovieLens compared to the 1M dataset where the former consisted of tensor slices whereas the 1m dataset used numpy arrays which proved to be much faster to train the models.\\
+
+The Outer Product model was similarly evaluated, primarily using HR and NCDG. Increasing embedding vector dimension size from 8 up to 32 allowed for greater HR and NCDG along with incremental decreases in loss. Notably, a learning rate of 0.001 using the Adam optimizer yielded the best performance compared to higher values. In direct comparison between LR = 0.001 and LR = 0.005, the lower value demonstrated greater decrease in loss, perhaps indicating unnecessarily quick convergence in the higher LR model leading to a suboptimal outcome.\\
+
+The Outer Product model was expanded to incorporate ResNet. Increased architectural complexity yielded similar results to the original model, with a comparison of $0.64$ HR and $0.37$ NCDG for the original versus $___$ HR and $___$ NCDG for the ResNet model after 20 epochs of training.\\
 
 \bibliographystyle{unsrt}
 %\bibliography{references} %%% Remove comment to use the external .bib file (using bibtex).
@@ -275,10 +283,3 @@ We also see that the GMF model performs poorly on the 100k dataset in terms of t
 
 
 \end{document}
-
-
-
-
-
-
-
