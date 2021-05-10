@@ -60,7 +60,7 @@ Iowa City, IA, 52242 \\
 \maketitle
 
 \begin{abstract}
-This is our paper for the course ISE:6380 Deep learning course taught by Prof. Stephen Baek, University of Iowa. This will be modified and updated through the course of the semester.
+NEED TO WRITE This is our paper for the course ISE:6380 Deep learning course taught by Prof. Stephen Baek, University of Iowa. This will be modified and updated through the course of the semester.
 \end{abstract}
 
 
@@ -79,9 +79,9 @@ Unlike content-based filtering, collaborative filtering uses interest data from 
 
 Traditionally, collaborative filtering uses Matrix Factorization (MF) to learn and utilize an embedding model. Using user-item interactions as inputs to a Matrix Factorization model allows the model to learn embeddings for the users and items. The model can then be used for new user-item pairs by calculating the dot product between the user's embedding and the item's embedding: $\hat{y}_{ui} = f(u,i|p_u,q_i) = \textbf{p}^T_u\textbf{q}_i = \sum{p_{uk}q_{ik}}$, where $\hat{y}_{ui}$ is the interaction and $\textbf{p}_u$ and $\textbf{q}_i$ are the embedding vectors for user \textit{u} and item \textit{i}.
 
-He et al. proposed Neural Collaborative Filtering (NCF) as a new framework for collaborative filtering which combines traditional MF with a multilayer perceptron to better recommendation performance compared to previous MF-based techniques (element-wise Alternating Least Squares, Bayesian Personalized Ranking)[1]. The original NCF paper uses a multilayer perceptron to model additional non-linearities in user-item interactions. Further, He et al. proposed Outer Product-based Neural Collaborative filtering, a technique which applied the outer product operation to user and item embeddings generating a 2-dimensional interaction map[2]. The approach can then use Convolutional Neural Network models on the interaction map to extract features and finally predict the interaction. In both cases, the frameworks encourage further experimentation with network architecture and parameters to imrpove performance.
+He et al. proposed Neural Collaborative Filtering (NCF) as a new framework for collaborative filtering which combined traditional MF with a multilayer perceptron to better recommendation performance compared to previous MF-based techniques (element-wise Alternating Least Squares, Bayesian Personalized Ranking) [1]. The original NCF paper used a multilayer perceptron to model additional non-linearities in user-item interactions. Further, He et al. proposed Outer Product-based Neural Collaborative filtering, a technique which applied the outer product operation to user and item embeddings generating a 2-dimensional interaction map [2]. The approach could then use Convolutional Neural Network models on the interaction map to extract features and finally predict the interaction. In both cases, the frameworks encouraged further experimentation with network architecture and parameters to improve performance.
 
-In this manuscript, the authors propose applying recent advances in neural network training (batch normalization, dropout) and architecture to the inner and outer product NCF frameworks.
+In this manuscript, the authors proposed applying recent advances in neural network training (batch normalization, dropout) and architecture to the inner and outer product NCF frameworks.
 
 %\subsection{Related works}
 %Neural collaborative filtering - \url{https://arxiv.org/pdf/1708.05031.pdf}. \\
@@ -91,23 +91,23 @@ In this manuscript, the authors propose applying recent advances in neural netwo
 
 \section{Problem Definition}
 \label{sec:Problem Definition}
-To test the effectiveness of our modifications to the NCF and outer-product frameworks, they will be applied to the problem of generating movie recommendations based on implicit feedback. Given $M$ users, $N$ items, and an $M$x$N$ user-item matrix, $\bold{Y}$, $y_{ui} = 1$ if user $u$ has interacted with item $i$, otherwise $y_{ui} = 0$. He et al. points out this can pose challenges as a value of 1 doesn't necessarily mean the user liked an item, and a value of 0 doesn't mean the user dislikes the item (they may just be unaware of that item)[1]. The recommendation problem is then given as the problem of estimating scores for unobserved user-item pairs in $\bold{Y}$.
+To test the effectiveness of modifications to the NCF and outer-product frameworks, changes were applied to the problem of generating movie recommendations based on implicit feedback. Given $M$ users, $N$ items, and an $M$x$N$ user-item matrix, $\bold{Y}$, $y_{ui} = 1$ if user $u$ had interacted with item $i$, otherwise $y_{ui} = 0$. He et al. pointed out that this could pose challenges as a value of 1 does not necessarily mean the user liked an item, and a value of 0 does not mean the user disliked an item (they could just be unaware of the item) [1]. The recommendation problem was then given as the problem of estimating scores for unobserved user-item pairs in $\bold{Y}$.
 
-The deep neural networks to be compared will be built using TensorFlow with Keras and will take in a pair consisting of user ID and movie ID. The networks will then output a probability that the user would interact with the movie. To evaluate the performance of the models, the authors will use 2 metrics: Hit Ratio (HR) and Normalized Discounted Cumulative Gain (NDCG). To calculate these metrics, the models will be fed in 99 items that the user hasn't interacted with and 1 test item that the user has interacted with. Hit Ratio measures whether the test item appears in the top-N of the 100 ranked items. Normalized Discounted Cumulative Gain measures how-highly the item is ranked within the top-N.
+The deep neural networks to be compared were built using TensorFlow with Keras and took in a pair consisting of user ID and movie ID. The networks then output a probability that the user would interact with the movie. To evaluate the performance of the models, the authors used 2 metrics: Hit Ratio (HR) and Normalized Discounted Cumulative Gain (NDCG). To calculate these metrics, the models were fed in 99 items that the user had not previously interacted with and 1 test item that the user had interacted with before. Hit Ratio measured whether the test item appeared in the top-N of the 100 ranked items. Normalized Discounted Cumulative Gain measured how-highly the item was ranked within the top-N.
 
-The traditional Neural Collaborative Filtering model will take the user and item embeddings, apply Matrix Factorization and a neural network to the embeddings, and have a final block of layers to compute the probability. The outer-product Neural Collaborative Filtering model will also take the user and item embeddings. This model will compute the outer product between the two embeddings, resulting in a 2-dimensional, $d$x$d$ matrix known as the interaction map. CNN architectures such as VGG, ResNet, or DenseNet can be applied to the interaction map to extract features, and a final block of layers can again compute the probability.
+The traditional Neural Collaborative Filtering (NCF) model took the user and item embeddings, applied Matrix Factorization and a neural network to the embeddings, and had a final block of layers to compute the probability. The outer-product Neural Collaborative Filtering model also took the user and item embeddings. This model computed the outer product between the two embeddings, resulting in a 2-dimensional, $D$x$D$ matrix known as the interaction map. The CNN architecture, ResNet, was applied to the interaction map to extract features, and a final block of layers again computed the probability.
 
-\textbf{Inputs}: The input to our models will be pairs of user ID and movie ID converted into Dense vectors using embeddings. Each Dense embedded vector will have $d$ dimensions, where d is an adjustable parameter for the size of the embedding.
+\textbf{Inputs}: The input to our models were pairs of user ID and movie ID converted into Dense vectors using embeddings. Each Dense embedded vector had $d$ dimensions, where d was an adjustable parameter for the size of the embedding.
 
-\textbf{Outputs}: The output of our models is a probability between 0 and 1. The probability represents the likelihood that a user $u$ would interact with an item $i$.
+\textbf{Outputs}: The output of our models was a probability between 0 and 1. The probability represented the likelihood that a user $u$ would interact with an item $i$.
 
 \section{Data}
 \label{sec:Data}
 
 \begin{itemize}
-\item Available data include user-given movie ratings, user-applied movie tags, and two additional files containing links to each movie's IMDB and TMDB. The movie ratings contain unique identifiers for the user and the movie, a rating score, and the time the rating was made. The movies also have associated genres and titles. Data that is not available include users' text reviews for further word processing and text similarity.
-\item The movies were collected from the website \url{https://www.themoviedb.org/} by the GroupLens research group at the University of Minnesota Twin Cities. This database hosts information on millions of movies, TV shows, and actors. The site was originally conceived as a donation from the Online Media Database, which is an online collaborative database intended to share content published under a Creative Commons license. The data was created by 162,541 users between January 09, 1995 and November 21, 2019. This dataset was generated on November 21, 2019.
-\item MovieLens datasets are generally distributed in the CSV format. The authors use the built-in CSV parser in the pandas library to extract the data. GroupLens distributes a multitude of datasets for various uses (education, research, performance testing). The authors propose using the latest small dataset for initial development and training, then switching to the stable 1M dataset for performance comparisons. The small dataset is formatted with 100,836 ratings, 3683 tags, 9,742 movies, and 610 users collected between March 1996 and September 2018. The stable 1M dataset has 1 million ratings from 6000 users on 4000 movies.
+\item Available data included user-given movie ratings, user-applied movie tags, and two additional files containing links to each movie's IMDB and TMDB. The movie ratings contained unique identifiers for the user and the movie, a rating score, and the time the rating was made. The movies also had associated genres and titles. Data that was not available included users' text reviews for further word processing and text similarity.
+\item The movies were collected from the website \url{https://www.themoviedb.org/} by the GroupLens research group at the University of Minnesota Twin Cities. This database hosted information on millions of movies, TV shows, and actors. The site was originally conceived as a donation from the Online Media Database, which is an online collaborative database intended to share content published under a Creative Commons license. The data was created by 162,541 users between January 09, 1995 and November 21, 2019. This dataset was generated on November 21, 2019.
+\item MovieLens datasets were generally distributed in the CSV format. The authors used the built-in CSV parser in the pandas library to extract the data. GroupLens distributed a multitude of datasets for various uses (education, research, performance testing). The authors proposed using the latest small dataset for initial development and training, then switching to the stable 1M dataset for performance comparisons. The small dataset was formatted with 100,836 ratings, 3683 tags, 9,742 movies, and 610 users collected between March 1996 and September 2018. The stable 1M dataset had 1 million ratings from 6000 users on 4000 movies.
 
 \end{itemize}
 
@@ -170,42 +170,54 @@ Users & Movies & Ratings \\
 \label{tab:table1}
 \end{table}
 
+\section{Methods}
+The generalized matrix factorization and the multi-layer perceptron models were designed from collaborative filtering techniques taken from this paper.https://arxiv.org/pdf/1708.05031.pdf. These two models are combined using a hyperparameter $\alpha$ that balances out the output of the two models. The layers for the MLP model are tested and modified on the training dataset to pick the best architecture from the one presented on the paper (one that has the least loss and has a high HR@10 and NDCG@10).
+
+The Outer Product model was created based on the architecture designed by He et al. [2]. The idea was to design a recommender system using the same NCF methods while introducing an outer product to create an interaction map. This enabled a more explicit representation of user and item embeddings such that correlations between embeddings dimensions could be better interpreted. As previously mentioned, this representation resulted in a 2-dimensional, $D$x$D$ matrix known as the interaction map, where D refers to the embedding size. 
+
+INSERT OP MODEL BLOCK DIAGRAM
+%\includegraphics[scale=0.5]{op_block_diagram}
+%\caption{Outer Product model architecture. D = embedding dimension}
+
+The Outer Product Model first took in two inputs (user and item) as embeddings and computed the product as the interaction map. This was followed by a network consisting of two convolution layers with ReLU activation, a pooling layer, and a Dense layer with sigmoid activation to generate a final recommendation. Training involved variations in embedding sizes including 4, 8, 16, and 32. Each model variant was trained until convergence occurred at 10 epochs. The variants were then compared based on maximal HR, maximal NDCG, and minimal loss. The most optimal variant was then designated as the final Outer Product model and was trained for 20 epochs. \\
+
 \section{Experiments and Results}
 \subsection{Evaluation charts and results}
-\subsubsection{Hit Rate and NCDG @ K=10}
+\subsubsection{Hit Rate and NDCG @ K=10}
+We conducted the evaluations based on the number of epochs and the number of embedding dimensions of the user and movie latent vectors. \emph{K} was set to 10 for the Hit Rate and the Normalized distributed cumulative gain since it was a very good number for picking the first recommendations that the model predicts.. We decided not to vary K as a lot of papers regarding top-K recommendations have been published varying K for testing the models.. 
 In this section, we tabulate and present the results of training our various models on the MovieLens dataset. \\
-HitRate@10 and NCDG@10 (Normalized cumulative distributed gain) for the models are presented below. These evaluations were calculated using the top-N recommendations that were predicted by the models. The models are tested over 11 epochs with the 0th epoch being the initial testing of the model.\\
+HitRate@10 and NDCG@10 (Normalized cumulative distributed gain) for the models are presented below. These evaluations were calculated using the top-N recommendations that were predicted by the models. The models were tested over 11 epochs with the 0th epoch being the initial testing of the model.\\
 \includegraphics[scale=0.5]{hit_rate}
 \includegraphics[scale=0.5]{ncdg}\\
 
 \subsubsection{Loss}
-Loss for the models is presented in the chart below. Loss was calculated as the binary cross-entropy from the keras library. The accuracy and the loss metrics for all the models was calculated using binary crossentropy since the ratings were implicit, using binary values of 0 and 1. \\
+Loss for the models was presented in the chart below. Loss was calculated as the binary cross-entropy from the Keras library. The accuracy and the loss metrics for all the models was calculated using binary cross-entropy since the ratings were implicit, using binary values of 0 and 1. \\
 \begin{center}
 \includegraphics[scale=0.5]{loss}
 \end{center}
 
 \subsubsection{GMF on the 100k dataset}
- The models were first trained on the 100k Movielens dataset but the errors and the evaluation metrics were far too off to predict any recommendations for the users. Specifically, the 100k dataset with 100,000 ratings was trained on the GMF model and the results of the evaluations and the loss is depicted in the chart below.
-The model was tested on the Hit rate, NCDG and binary loss over 11 epochs with the 0th epoch being the initial testing of the model. \\
+The models were first trained on the 100k Movielens dataset, but the errors and evaluation metrics were too poor to predict reasonable recommendations for the users. Specifically, the 100k dataset with 100,000 ratings was trained on the GMF model and the results of the evaluations and loss were depicted in the chart below.
+The model was tested based on HR, NDCG and binary loss over 11 epochs with the 0th epoch being the initial testing of the model. \\
 \begin{center}
 \includegraphics[scale=0.5]{gmf100k}
 \end{center}
 
 \subsubsection{Embedding dimensions on model performance}
-We tested the models' loss and metrics against embedding vector dimensions of sizes 4, 8, 16 and 32 since they are common powers of 2. As can be observed from the figure, GMF and NeuMF models performed really well on 16 dimensions os the inputs whereas the MLP model did well on the dimension of 4. this could be due to the fact that the MLP model has a lot of parameters than the GMF model and thus might result in overfitting the training dataset. As far as NeuMF is concerned, even though the number of parameters were more or less the same, as will be descirbed in the Combined NeuMF section, the $\alpha$ parameter reduces its effect on the overall output.
+We tested the models' loss and metrics against embedding vector dimensions of sizes 4, 8, 16 and 32 since they are common powers of 2. As can be observed from the figure, GMF and NeuMF models performed really well on 16 dimensions os the inputs whereas the MLP model did well on the dimension of 4. this could be due to the fact that the MLP model has a lot of parameters than the GMF model and thus might result in overfitting the training dataset. As far as NeuMF is concerned, even though the number of parameters were more or less the same, as will be described in the Combined NeuMF section, the $\alpha$ parameter reduces its effect on the overall output.
 \begin{center}
 \includegraphics[scale=0.5]{factors}
 \end{center}
 
-\subsection{Multi-layer Preceptron}
-The multi-layer preceptron model used a 64 $\rightarrow$ 32 $\rightarrow$ 16 $\rightarrow$ 1 dense layer units with a RelU activation for the first 3 layers and the sigmoid activation for the last Dense 1 unit layer. The first layer is initialized using a glorot uniform initializer and uses an L2 regularizer. The other layers use a normal configuration. This model was previously tested with an average ayer configuration such as 512 $\rightarrow$ 256 $\rightarrow$ 64 $\rightarrow$ 32 and 32 $\rightarrow$ Avg layer $\rightarrow$ 1 that used more dense units and layers with an addition of an average layer that smooths the result of the 32 units dense layers. But the model had a problem of overfitting the dataset. The metrics of the tested models are presented in the table below.
+\subsection{Multilayer Perceptron}
+The multilayer perceptron model used a 64 $\rightarrow$ 32 $\rightarrow$ 16 $\rightarrow$ 1 dense layer units with a RelU activation for the first 3 layers and the sigmoid activation for the last Dense 1 unit layer. The first layer is initialized using a glorot uniform initializer and uses an L2 regularizer. The other layers use a normal configuration. This model was previously tested with an average ayer configuration such as 512 $\rightarrow$ 256 $\rightarrow$ 64 $\rightarrow$ 32 and 32 $\rightarrow$ Avg layer $\rightarrow$ 1 that used more dense units and layers with an addition of an average layer that smooths the result of the 32 units dense layers. But the model had a problem of overfitting the dataset. The metrics of the tested models are presented in the table below.
 
 \begin{table}[h]
-\caption{Accuracies, HR@10 and NCDG@10}
+\caption{Accuracies, HR@10 and NDCG@10}
 \centering
 \begin{tabular}{llll}
 \toprule
-Model & Accuracy & HR10 & NCDG10 \\
+Model & Accuracy & HR10 & NDCG10 \\
 \midrule
 Original Model & 0.863 & 0.5629 & 0.3145 \\
 Average model & 0.814 & 0.4412 & 0.2216 \\
@@ -215,34 +227,34 @@ Average model & 0.814 & 0.4412 & 0.2216 \\
 \end{table}
 
 \subsection{Generalized Matrix Factorization}
-GMF model used the matrix factorization method of the dot product bwtween the user latent vector and the item latent vector.
+The GMF model used the matrix factorization method of the dot product between the user latent vector and the item latent vector.
 
 \subsection{Combined NeuMF}
-The NeuMF model combined the matrix factorization and the multi-layer preceptron. The GMF model is the same as the original wheras the MLP part had some tweaking to it. Instead of the original layers that were mentioned in Table 4, the model uses 64 $\rightarrow$ 32 $\rightarrow$ 8 $\rightarrow$ 1, with L2 regularization on all the layers. After the individual part outputs, the model use a custom layer that combines the output of the GMF and the MLP models together using $\alpha$ as a weighting parameter to balance the effects of the two model outputs.\\
+The NeuMF model combined the matrix factorization and the multilayer perceptron. The GMF model is the same as the original whereas the MLP part had some tweaking to it. Instead of the original layers that were mentioned in Table 4, the model uses 64 $\rightarrow$ 32 $\rightarrow$ 8 $\rightarrow$ 1, with L2 regularization on all the layers. After the individual part outputs, the model use a custom layer that combines the output of the GMF and the MLP models together using $\alpha$ as a weighting parameter to balance the effects of the two model outputs.\\
 
 \[
 \begin{bmatrix}
-    \alpha * (\phi_{GMF}) \\
-    (1 - \alpha) * (\phi_{MLP})  
+\alpha * (\phi_{GMF}) \\
+(1 - \alpha) * (\phi_{MLP})
 \end{bmatrix}
 \]
 
 The final result is an addition operation performed on the elements of the matrix and this gives the prediction $y_{ui}$ of user \emph{u} and item \emph{i}.
 
 \subsection{Outer Product Model}
-The Outer Product model NCF model took in user and item embeddings similarly to the other MF models. However, the Outer Product model additionally computed the outer product between the two to create a 2-dimensional interaction map. This was followed by a convolution layer with ReLU activation, pooling, another convolution layer with ReLU activation, and a final Dense layer with sigmoid activation. This was additionally tested with varying embedding vector dimensions of sizes 8, 16, and 32.
+The Outer Product model NCF model took in user and item embeddings similarly to the other MF models. However, the Outer Product model additionally computed the outer product between the two to create a 2-dimensional interaction map. Evaluations of HR, NDCG, and loss all indicate relatively similar performance compared to the other four. Over 10 epochs of training, the Outer Product model achieves a HR of $0.64$, which is close to all of the other models excluding MLP, which was significantly lower in HR and NDCG. Using varying embedding vector dimensions from sizes 4, 8, 16, and 32 yielded notable increases in hit rate as embedding size increased. This trend was observed in the Outer Product model as well as the ResNet and GMF models. 
 
 \subsection{Outer Product Model - ResNet}
 
 
 \section{Comparison of Models}
-From the last section, all of the models strongly perform well on the datasets. We can see that GMF and NeuMF dominate MLP in terms of accuracy and evaluation metrics. Specifically, when comparing the best performances of these models across their embedding dimension factors, GMF and NeuMF show consistent improvements over MLP in terms of HR@10 and NCDG@10. GMF, in particular seems to be performing a little better than NeuMF by margins of $\pm 0.02$. MLP is lower than NeuMF by about $0.1 \pm 0.02$. MLP can be improved by adding more dense layers or adding regularizers, here we test with only 3 hidden layers.\\
+From the last section, all of the models strongly perform well on the datasets. We can see that GMF and NeuMF dominate MLP in terms of accuracy and evaluation metrics. Specifically, when comparing the best performances of these models across their embedding dimension factors, GMF and NeuMF show consistent improvements over MLP in terms of HR@10 and NDCG@10. GMF, in particular seems to be performing a little better than NeuMF by margins of $\pm 0.02$. MLP is lower than NeuMF by about $0.1 \pm 0.02$. MLP can be improved by adding more dense layers or adding regularizers, here we test with only 3 hidden layers.\\
 
-We also see that the GMF model performs poorly on the 100k dataset in terms of the evaluation metrics even though the binary loss goes down for every epoch. The highest HR@10 achieved was $0.4$ on this dataset and NCDG@10 was around $0.25$. Comparing this to the models trained on the 1m dataset shows the difference. This might be due to the arrangement or the input type feed to the neural net. of the 100k dataset of MovieLens compared to the 1M dataset where the former consisted of tensor slices whereas the 1m dataset used numpy arrays which proved to be much faster to train the models.\\
+We also see that the GMF model performs poorly on the 100k dataset in terms of the evaluation metrics even though the binary loss goes down for every epoch. The highest HR@10 achieved was $0.4$ on this dataset and NDCG@10 was around $0.25$. Comparing this to the models trained on the 1m dataset shows the difference. This might be due to the arrangement or the input type feed to the neural net. of the 100k dataset of MovieLens compared to the 1M dataset where the former consisted of tensor slices whereas the 1m dataset used numpy arrays which proved to be much faster to train the models.\\
 
-The Outer Product model was similarly evaluated, primarily using HR and NCDG. Increasing embedding vector dimension size from 8 up to 32 allowed for greater HR and NCDG along with incremental decreases in loss. Notably, a learning rate of 0.001 using the Adam optimizer yielded the best performance compared to higher values. In direct comparison between LR = 0.001 and LR = 0.005, the lower value demonstrated greater decrease in loss, perhaps indicating unnecessarily quick convergence in the higher LR model leading to a suboptimal outcome.\\
+The Outer Product model was similarly evaluated, primarily using HR and NDCG. Increasing embedding vector dimension size from 8 up to 32 allowed for greater HR and NDCG along with incremental decreases in loss. In preliminary training, a learning rate of 0.001 using the Adam optimizer yielded the best performance compared to higher values. In direct comparison between LR = 0.001 and LR = 0.005, the lower value demonstrated greater decrease in loss, perhaps indicating unnecessarily quick convergence in the higher LR model leading to a suboptimal outcome.\\
 
-The Outer Product model was expanded to incorporate ResNet. Increased architectural complexity yielded similar results to the original model, with a comparison of $0.64$ HR and $0.37$ NCDG for the original versus \rule{1cm}{0.15mm} HR and \rule{1cm}{0.15mm} NCDG for the ResNet model after 20 epochs of training.\\
+The Outer Product model was expanded to incorporate ResNet. Increased architectural complexity yielded similar results to the original model, with a comparison of $0.64$ HR and $0.37$ NDCG for the original versus $0.65$ HR and $0.38$ NDCG for the ResNet model after 20 epochs of training. Theoretically, the Outer Product and ResNet models each provide interaction maps above the embedding layer that provide a more semantically explicable relation among embedding dimensions that is absent in the other models. In a wide comparison of the five different models, increasing embedding size resulted in significant increases in HR and NDCG for the GMF, Outer Product, and ResNet models. Although training in this study occurred up to an embedding dimension of 32, future studies with greater computational power would be helpful in exploration to give a more robust representation of each model’s capabilities. \\
 
 \bibliographystyle{unsrt}
 %\bibliography{references} %%% Remove comment to use the external .bib file (using bibtex).
@@ -254,10 +266,10 @@ The Outer Product model was expanded to incorporate ResNet. Increased architectu
 %
 %
 %\bibitem{he2017}
-%He, Xiangnan and Liao, Lizi and Zhang, Hanwang and Nie, Liqiang and Hu, 
+%He, Xiangnan and Liao, Lizi and Zhang, Hanwang and Nie, Liqiang and Hu,
 % Xia and Chua, Tat-Seng
 %\newblock Neural Collaborative Filtering.
-%\newblock In {\em International World Wide Web Conferences Steering 
+%\newblock In {\em International World Wide Web Conferences Steering
 % Committee}. WWW, 2017.
 %
 %\bibitem{kour2014real}
@@ -283,3 +295,4 @@ The Outer Product model was expanded to incorporate ResNet. Increased architectu
 
 
 \end{document}
+
